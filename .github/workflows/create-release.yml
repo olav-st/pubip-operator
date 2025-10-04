@@ -1,0 +1,50 @@
+name: Create Release
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  release-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}-release-commit
+    steps:
+      - name: Clone the code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Get next version
+        id: semver
+        uses: ietf-tools/semver-action@v1
+        with:
+          token: ${{ github.token }}
+          branch: main
+          noNewCommitBehavior: current
+          noVersionBumpBehavior: current
+
+      - name: Update version numbers
+        if : steps.semver.outputs.current != steps.semver.outputs.next
+        run: |
+          sed -i "s/${{ steps.semver.outputs.current }}/${{ steps.semver.outputs.next }}/g" README.md cmd/controller/main.go internal/controller/publicipupdater_controller.go config/manager/kustomization.yaml dist/chart/values.yaml
+
+      - name: Commit changes
+        if : steps.semver.outputs.current != steps.semver.outputs.next
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: "chore: release version ${{ steps.semver.outputs.next }}"
+
+      - name: Create release tag
+        if : steps.semver.outputs.current != steps.semver.outputs.next
+        env:
+          RELEASE_TAG: ${{ steps.semver.outputs.next }}
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git tag ${RELEASE_TAG}
+          git push origin ${RELEASE_TAG}

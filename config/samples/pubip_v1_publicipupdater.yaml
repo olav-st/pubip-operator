@@ -1,0 +1,19 @@
+apiVersion: pubip.olav.ninja/v1
+kind: PublicIPUpdater
+metadata:
+  labels:
+    app.kubernetes.io/name: pubip-operator
+    app.kubernetes.io/managed-by: kustomize
+  name: sample
+spec:
+  sources:
+    - akami
+    - aws_checkip
+    - ipify
+    - ipinfo
+  targets:
+    - apiVersion: v1
+      kind: ConfigMap
+      namespace: pubip-operator
+      name: sample-configmap
+      fieldPath: data.PUBLIC_IP

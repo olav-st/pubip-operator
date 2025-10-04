@@ -1,0 +1,58 @@
+{{- if .Values.rbac.enable }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    {{- include "chart.labels" . | nindent 4 }}
+  name: pubip-operator-manager-role
+rules:
+- apiGroups:
+  - "*"
+  resources:
+  - "*"
+  verbs:
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - batch
+  resources:
+  - jobs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - pubip.olav.ninja
+  resources:
+  - publicipupdaters
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - pubip.olav.ninja
+  resources:
+  - publicipupdaters/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - pubip.olav.ninja
+  resources:
+  - publicipupdaters/status
+  verbs:
+  - get
+  - patch
+  - update
+{{- end -}}
