@@ -86,7 +86,7 @@ func main() {
 	flag.StringVar(&metricsCertKey, "metrics-cert-key", "tls.key", "The name of the metrics server key file.")
 	flag.BoolVar(&enableHTTP2, "enable-http2", false,
 		"If set, HTTP/2 will be enabled for the metrics and webhook servers")
-	flag.StringVar(&fetcherImage, "fetcher-image", "ghcr.io/olav-st/pubip-operator-fetcher:v0.0.0",
+	flag.StringVar(&fetcherImage, "fetcher-image", "ghcr.io/olav-st/pubip-operator-fetcher:v0.0.1",
 		"Container image to use for IP fetcher jobs")
 	opts := zap.Options{
 		Development: true,

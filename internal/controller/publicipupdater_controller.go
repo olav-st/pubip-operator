@@ -59,7 +59,7 @@ const (
 	ConditionTypeTargetsUpdated = "TargetsUpdated"
 
 	// DefaultFetcherImage is the default image for the IP fetcher
-	DefaultFetcherImage = "ghcr.io/olav-st/pubip-operator-fetcher:v0.0.0"
+	DefaultFetcherImage = "ghcr.io/olav-st/pubip-operator-fetcher:v0.0.1"
 )
 
 // PublicIPUpdaterReconciler reconciles a PublicIPUpdater object

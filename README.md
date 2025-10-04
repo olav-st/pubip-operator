@@ -11,7 +11,7 @@ pubip-operator is designed to monitor and update public IP addresses for Kuberne
 The operator can be installed with Helm in a single command:
 
 ```sh
-helm install pubip-operator oci://ghcr.io/olav-st/pubip-operator/charts/pubip-operator --namespace pubip-operator --create-namespace --version v0.0.0
+helm install pubip-operator oci://ghcr.io/olav-st/pubip-operator/charts/pubip-operator --namespace pubip-operator --create-namespace --version v0.0.1
 ```
 
 ### Create a PublicIPUpdater Resource
