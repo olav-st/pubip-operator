@@ -9,7 +9,7 @@ layout:
 plugins:
   helm.kubebuilder.io/v1-alpha: {}
 projectName: pubip-operator
-repo: olav.ninja/pubip-operator
+repo: github.com/olav-st/pubip-operator
 resources:
 - api:
     crdVersion: v1
